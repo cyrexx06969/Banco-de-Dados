@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <style>
+    input {
+        width: 200px;
+        padding: 8px;
+    }
+    </style>
+    <title>Cadastro de Dados dos Clientes</title>
+    <style>
+
+        body {
+            font-family: Arial;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            margin: 50px auto;
+            width: 300px;
+            border-radius: 10px;
+        }
+
+        button {
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+      <header>
+        <h1>Banco de Dados</h1>
+    <nav>
+        <button><a href="cadastro_dos_dados_dos_clientes.html" style="color:black;">Cadastrar Clientes</a></button>
+        <button><a href="clientes.html" style="color:black;">Clientes</a></button>
+     </nav>
+
+    </header>
+
+    <div class="container">
+        <h1>Cadastro de Dados dos Clientes</h1>
+
+        <p>Por favor, preencha os dados abaixo </p>
+<form id="formCliente">
+        <input type="text" id="nome" placeholder="Nome completo" required><br><br>
+        <input type="text" id="bairro" placeholder="Condomínio/bairro" required><br><br>
+        <input type="tel" id="telefone" placeholder="Telefone" required><br><br>
+        <input type="text" id="endereco" placeholder="Endereço" required><br><br>
+
+        <br><br>
+
+        <button>Confirmar</button>
+    </form>
+</div>
+
+    <script>
+document.getElementById("formCliente").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    const cliente = {
+        nome: document.getElementById("nome").value,
+        bairro: document.getElementById("bairro").value,
+        telefone: document.getElementById("telefone").value,
+        endereco: document.getElementById("endereco").value
+    };
+
+    let clientes = JSON.parse(localStorage.getItem("clientes")) || [];
+
+    clientes.push(cliente);
+
+    localStorage.setItem("clientes", JSON.stringify(clientes));
+
+    window.location.href = "clientes.html";
+});
+</script>
+
+</body>
+</html>

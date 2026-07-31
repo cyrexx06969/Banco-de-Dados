@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clientes:</title>
+    <style>
+ body{
+    font-family: Arial, Helvetica, sans-serif;
+    background:#f4f4f4;
+    text-align:center;
+}
+
+#resultado{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:20px;
+}
+
+.card{
+    width:280px;
+    background:white;
+    border-radius:12px;
+    padding:20px;
+    box-shadow:0 0 10px rgba(0,0,0,.15);
+    text-align:left;
+    transition:.2s;
+}
+
+.card:hover{
+    transform:scale(1.03);
+}
+
+.card h3{
+    margin-top:0;
+    color:#1f4e79;
+}
+</style>
+</head>
+<body>
+
+ <header>
+        <h1>Banco de Dados</h1>
+    <nav>
+        <button><a href="cadastro_dos_dados_dos_clientes.html" style="color:black;">Cadastrar Clientes</a></button>
+        <button><a href="clientes.html" style="color:black;">Clientes</a></button>
+     </nav>
+
+    </header>
+
+    <h1>Clientes Cadastrados</h1>
+<input
+type="text"
+id="filtro"
+placeholder="Pesquisar clientes..."
+>
+<button onclick="pesquisarCliente()">Pesquisar</button>
+
+<br><br>
+
+
+
+
+<div id="resultado"></div>
+
+    <script>
+    let clientes = JSON.parse(localStorage.getItem("clientes")) || [];
+let resultado = document.getElementById("resultado");
+
+function mostrarClientes(lista) {
+
+    resultado.innerHTML = "";
+
+    if (lista.length === 0) {
+        resultado.innerHTML = "<h2>Nenhum cliente encontrado.</h2>";
+        return;
+    }
+
+    lista.forEach(function(cliente){
+
+        const card = document.createElement("div");
+
+        card.classList.add("card");
+
+        card.innerHTML = `
+            <h3>${cliente.nome}</h3>
+
+            <p><strong>Endereço:</strong> ${cliente.endereco}</p>
+
+            <p><strong>Bairro/Condomínio:</strong> ${cliente.bairro}</p>
+
+            <p><strong>Telefone:</strong> ${cliente.telefone}</p>
+        `;
+
+        resultado.appendChild(card);
+
+    });
+}
+
+
+function pesquisarCliente(){
+
+    let busca = document.getElementById("filtro").value.toLowerCase();
+
+    let clientesFiltrados = clientes.filter(function(cliente){
+
+        return (
+            cliente.nome.toLowerCase().includes(busca) ||
+            cliente.endereco.toLowerCase().includes(busca) ||
+            cliente.bairro.toLowerCase().includes(busca) ||
+            cliente.telefone.includes(busca)
+        );
+
+    });
+
+    mostrarClientes(clientesFiltrados);
+}
+mostrarClientes(clientes);
+    </script>
+
+</body>
+</html>
